@@ -1,4 +1,6 @@
 # BFS for a Tree
+from collections import deque
+
 
 class TreeNode:
     def __init__(self, value):
@@ -6,13 +8,14 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 def bfs_tree(root):
     if not root:
         return []
-    
+
     queue = deque([root])
     result = []
-    
+
     while queue:
         node = queue.popleft()
         result.append(node.value)
@@ -20,6 +23,5 @@ def bfs_tree(root):
             queue.append(node.left)
         if node.right:
             queue.append(node.right)
-            
-    
+
     return result
