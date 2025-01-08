@@ -9,39 +9,31 @@ class SinglyLinkedList:
         self.head = None
 
     def add(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
+        def add_recursive(node, data):
+            if not node:
+                return Node(data)
+            node.next = add_recursive(node.next, data)
+            return node
+        self.head = add_recursive(self.head, data)
 
     def delete(self, key):
-        if not self.head:
-            return
-
-        # If the head node itself holds the key
-        if self.head.data == key:
-            self.head = self.head.next
-            return
-
-        # Search for the key in the list
-        current = self.head
-        while current.next and current.next.data != key:
-            current = current.next
-
-        if current.next:
-            current.next = current.next.next
+        def delete_recursive(node, key):
+            if not node:
+                return None
+            if node.data == key:
+                return node.next
+            node.next = delete_recursive(node.next, key)
+            return node
+        self.head = delete_recursive(self.head, key)
 
     def search(self, key):
-        current = self.head
-        while current:
-            if current.data == key:
+        def search_recursive(node, key):
+            if not node:
+                return False
+            if node.data == key:
                 return True
-            current = current.next
-        return False
+            return search_recursive(node.next, key)
+        return search_recursive(self.head, key)
 
     def reverse(self):
         def reverse_recursive(node, prev=None):
@@ -50,15 +42,16 @@ class SinglyLinkedList:
             next_node = node.next
             node.next = prev
             return reverse_recursive(next_node, node)
-
         self.head = reverse_recursive(self.head)
 
     def display(self):
-        current = self.head
-        while current:
-            print(current.data, end=" -> ")
-            current = current.next
-        print("None")
+        def display_recursive(node):
+            if not node:
+                print("None")
+                return
+            print(node.data, end=" -> ")
+            display_recursive(node.next)
+        display_recursive(self.head)
 
 
 # Create a linked list
@@ -81,3 +74,8 @@ print("Search for 40:", ll.search(40))  # Output: False
 ll.reverse()
 print("Reversed List:")
 ll.display()  # Output: 30 -> 20 -> 10 -> None
+
+# Delete an element
+ll.delete(20)
+print("After Deleting 20:")
+ll.display()  # Output: 30 -> 10 -> None
