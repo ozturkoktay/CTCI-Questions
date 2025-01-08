@@ -48,6 +48,6 @@ def buildTree(values: List[Optional[int]]) -> Optional[TreeNode]:
     return root
 
 
-assert isBalanced(buildTree([3, 9, 20, None, None, 15, 7])) is True
-assert isBalanced(buildTree([1, 2, 2, 3, 3, None, None, 4, 4])) is False
-assert isBalanced(buildTree([])) is True
+assert successor(buildTree([3, 9, 20, None, None, 15, 7])) is True
+assert successor(buildTree([1, 2, 2, 3, 3, None, None, 4, 4])) is False
+assert successor(buildTree([])) is True
